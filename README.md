@@ -35,9 +35,127 @@ STEP-5: Display the obtained cipher text.
 
 
 Program:
+```
+### PROGRAM
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main()
+{
+    char key[100], text[100], matrix[5][5];
+    int used[26] = {0}, i, j, k = 0;
+    int r1, c1, r2, c2;
+    char ch, a, b;
+
+    printf("Enter keyword: ");
+    scanf("%s", key);
+
+    printf("Enter plaintext: ");
+    scanf("%s", text);
+
+    used['J' - 'A'] = 1;
+
+    for (i = 0; key[i] != '\0'; i++)
+    {
+        ch = toupper(key[i]);
+
+        if (ch == 'J')
+            ch = 'I';
+
+        if (ch >= 'A' && ch <= 'Z' && !used[ch - 'A'])
+        {
+            matrix[k / 5][k % 5] = ch;
+            used[ch - 'A'] = 1;
+            k++;
+        }
+    }
+
+    for (ch = 'A'; ch <= 'Z'; ch++)
+    {
+        if (!used[ch - 'A'])
+        {
+            matrix[k / 5][k % 5] = ch;
+            k++;
+        }
+    }
+
+    for (i = 0; i < 5; i++)
+    {
+        for (j = 0; j < 5; j++)
+            printf("%c ", matrix[i][j]);
+        printf("\n");
+    }
+
+    printf("Cipher text: ");
+
+    for (i = 0; text[i] != '\0'; i++)
+        text[i] = toupper(text[i]);
+
+    for (i = 0; text[i] != '\0'; i += 2)
+    {
+        a = text[i];
+
+        if (a == 'J')
+            a = 'I';
+
+        if (text[i + 1] == '\0' || a == toupper(text[i + 1]))
+            b = 'X';
+        else
+        {
+            b = toupper(text[i + 1]);
+
+            if (b == 'J')
+                b = 'I';
+        }
+
+        for (j = 0; j < 5; j++)
+        {
+            for (k = 0; k < 5; k++)
+            {
+                if (matrix[j][k] == a)
+                {
+                    r1 = j;
+                    c1 = k;
+                }
+
+                if (matrix[j][k] == b)
+                {
+                    r2 = j;
+                    c2 = k;
+                }
+            }
+        }
+
+        if (r1 == r2)
+        {
+            printf("%c%c", matrix[r1][(c1 + 1) % 5],
+                   matrix[r2][(c2 + 1) % 5]);
+        }
+        else if (c1 == c2)
+        {
+            printf("%c%c", matrix[(r1 + 1) % 5][c1],
+                   matrix[(r2 + 1) % 5][c2]);
+        }
+        else
+        {
+            printf("%c%c", matrix[r1][c2], matrix[r2][c1]);
+        }
+    }
+
+    printf("\n");
+    return 0;
+}
+```
+
+
 
 
 
 
 
 Output:
+<img width="1352" height="682" alt="image" src="https://github.com/user-attachments/assets/a096648a-49cd-4b2a-ab49-08e01e638a47" />
+
